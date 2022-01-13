@@ -14,6 +14,8 @@ import BookList from './component/BookList';
 import CommentList from './component/CommentList';
 import AddComment from './component/AddComent';
 import SearchBar from './component/SearchBar';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Registration from './component/Registration'
 
 const App = () => {
 
@@ -43,49 +45,45 @@ const [category,setCategory]= useState(history)
     return (
       
       <div className="App">
-      {/* <MyWarning warning="This Book is on High Demand" color="info"/> */}
-      {/* <MyBadges Mytext="Buy The Latest Book"  color="danger" /> */}
-       <Container className="py-2  w-100 m-auto" style={{position:'sticky',top:'0px',zIndex:'2',backgroundColor:'black'}} fluid>
-
-        <h1 className="text-white mb-3" >Select the book categories</h1>
-         <SearchBar handleSearch={handleSearch} search={search}/>
-       <Row className='text-center'>
-        
-         {
-           categoryBtn.map(btn=>(
-         <Col>
-             
-             <button className="w-100 m-1 mt-3 rounded-lg px-3 py-2 bg-dark text-white " style ={{minWidth:'250px',maxWidth:'250px'}} onClick={(e)=>changeCategory(btn.jsonLink)}>{btn.title}hello</button>
-        </Col>
-             ))
-            }</Row>
+        <BrowserRouter>
+        <Routes>
+         <Route path='/' element={<>
+        <Container className="py-2  w-100 m-auto" style={{position:'sticky',top:'0px',zIndex:'2',backgroundColor:'black'}} fluid>
+                <SearchBar handleSearch={handleSearch} search={search}/>
+                  <h3 className="text-white mt-4 mb-1" >Select the book categories</h3>
+                <Row className='text-center'>
+                          {categoryBtn.map(btn=>(
+                          <Col>
+                              <button className="w-100 m-1 mt-3 rounded-lg px-3 py-2 bg-dark text-white " style ={{minWidth:'250px',maxWidth:'250px'}} onClick={(e)=>changeCategory(btn.jsonLink)}>{btn.title}</button>
+                          </Col>                              ))
+                }</Row>
             </Container>
-     <Container fluid>
-       <Row>
-         <Col xs={6} sm={8} md={8} lg={showComment?9:12}>
-            <BookList books={category} changeBookAsin = {changeBookAsin} search={search}/>
-            {/* <SingleBook className="singlBook" changeBookAsin = {this.changeBookAsin} book={scifiBooks[0]}/> */}
-         </Col>
-
-         <Col className=" text-center bg-dark" xs={6} sm={4} md={4} lg={3} style={{display:showComment? 'block':'none',position:'fixed', right:'0', height:'100vh',overflow:'scroll'}}>
-               
-                {
-                  category.filter(book=>book.asin.includes(asin)).map((book)=>(
-                    <div className='bg-dark  p-0 mt-1' style={{position:'sticky', top:'0',zIndex:'3'}}>
-                      <div key={book.asin}  style={{maxWidth:'100px',width:'100%',display:'flex', fontSize:'18px',color:'white'}}>
-                    <img className="w-100"src={book.img}/>
-                      <span className="w-100" style={{minWidth:'200px',whiteSpace:'wrap'}}>{book.title} </span>
-                    </div>
-                    
-                      <AddComment asin = {asin}/>
-                </div>))
-            }
-            
-            <CommentList asin={asin}/>
-         </Col>
-       </Row>
-       </Container> 
-      
+            <Container fluid>
+              <Row>
+                <Col xs={6} sm={8} md={8} lg={showComment?9:12}>
+                    <BookList books={category} changeBookAsin = {changeBookAsin} search={search}/>
+                </Col>
+                <Col className=" text-center bg-dark" xs={6} sm={4} md={4} lg={3} style={{display:showComment? 'block':'none',position:'fixed', right:'0', height:'100vh',overflow:'scroll'}}>
+                      
+                        {
+                          category.filter(book=>book.asin.includes(asin)).map((book)=>(
+                            <div className='bg-dark  p-0 mt-1' style={{position:'sticky', top:'0',zIndex:'3'}}>
+                              <div key={book.asin}  style={{maxWidth:'100px',width:'100%',display:'flex', fontSize:'18px',color:'white'}}>
+                            <img className="w-100"src={book.img}/>
+                              <span className="w-100" style={{minWidth:'200px',whiteSpace:'wrap'}}>{book.title} </span>
+                            </div>
+                            
+                              <AddComment asin = {asin}/>
+                        </div>))
+                    }
+                    <CommentList asin={asin}/>
+                </Col>
+              </Row>
+       </Container> </>}/>
+          <Route path='/registration' element={<Registration/>} />         
+        </Routes>
+       </BrowserRouter>
+  
     </div>
   );
 }
