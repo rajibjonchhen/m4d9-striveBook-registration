@@ -15,7 +15,7 @@ import CommentList from './component/CommentList';
 import AddComment from './component/AddComent';
 import SearchBar from './component/SearchBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Registration from './component/Registration'
+import Registration from './component/formHookLib'
 
 const App = () => {
 
